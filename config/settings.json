@@ -1,0 +1,49 @@
+{
+    "database": {
+        "type": "sqlite",
+        "filename": "hardware_pos.db",
+        "backup_interval": 24
+    },
+    "ui": {
+        "theme": "modern",
+        "language": "en",
+        "window_size": [
+            1200,
+            800
+        ],
+        "maximize_on_startup": false,
+        "saved_username": "admin"
+    },
+    "pos": {
+        "tax_rate": 0.13,
+        "currency": "CAD",
+        "currency_symbol": "$",
+        "receipt_template": "default",
+        "auto_backup": true
+    },
+    "printing": {
+        "receipt_printer": "",
+        "barcode_printer": "",
+        "receipt_width": 80,
+        "auto_print_receipt": false
+    },
+    "inventory": {
+        "low_stock_threshold": 10,
+        "auto_reorder": false,
+        "track_serial_numbers": true
+    },
+    "network": {
+        "sync_enabled": false,
+        "sync_interval": 300,
+        "server_url": "",
+        "api_key": ""
+    },
+    "security": {
+        "session_timeout": 3600,
+        "password_policy": {
+            "min_length": 8,
+            "require_special_chars": true,
+            "require_numbers": true
+        }
+    }
+}

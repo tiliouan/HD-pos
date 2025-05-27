@@ -1,0 +1,32 @@
+# Hardware POS System - Python Dependencies
+
+# GUI Framework
+PyQt5>=5.15.0
+
+# Database
+sqlite3  # Built-in with Python
+
+# Reporting and Export
+reportlab>=3.6.0      # PDF generation
+openpyxl>=3.0.0       # Excel file handling
+matplotlib>=3.5.0     # Charts and graphs
+Pillow>=8.0.0         # Image processing
+
+# Barcode generation
+python-barcode>=0.14.0
+
+# Printing (Windows)
+pywin32>=300; sys_platform == "win32"
+
+# Utilities
+python-dateutil>=2.8.0
+requests>=2.25.0      # For network sync features
+
+# Development and Testing
+pytest>=6.0.0
+pytest-qt>=4.0.0     # For GUI testing
+
+# Optional: For enhanced features
+# qrcode>=7.0.0         # QR code generation
+# cryptography>=3.0.0   # Advanced encryption
+# schedule>=1.1.0       # Task scheduling

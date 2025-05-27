@@ -1,0 +1,12 @@
+2025-05-27 16:31:08 - core.database - ERROR - Failed to initialize database: 'DatabaseManager' object has no attribute '_create_schema'
+2025-05-27 16:31:08 - __main__ - ERROR - Failed to initialize database
+2025-05-27 16:55:23 - ui.main_window - ERROR - Error opening product manager: ProductManagerDialog.__init__() takes from 2 to 3 positional arguments but 5 were given
+2025-05-27 16:56:22 - ui.client_manager - ERROR - Error saving client: Client.__init__() got an unexpected keyword argument 'full_name'
+2025-05-27 16:56:31 - ui.client_manager - ERROR - Error saving client: Client.__init__() got an unexpected keyword argument 'full_name'
+2025-05-27 16:56:53 - ui.main_window - ERROR - Error opening product manager: ProductManagerDialog.__init__() takes from 2 to 3 positional arguments but 5 were given
+2025-05-27 16:57:17 - ui.category_manager - ERROR - Error deleting category: 'InventoryManager' object has no attribute 'delete_category'
+2025-05-27 16:57:35 - ui.main_window - ERROR - Error opening product manager: ProductManagerDialog.__init__() takes from 2 to 3 positional arguments but 5 were given
+2025-05-27 18:45:57 - ui.main_window - ERROR - Error opening product manager: ProductManagerDialog.__init__() takes from 2 to 3 positional arguments but 5 were given
+2025-05-27 18:58:18 - ui.product_manager - ERROR - Error saving product: 'InventoryManager' object has no attribute 'add_product'
+2025-05-27 19:04:13 - core.inventory - ERROR - Error creating product: Error binding parameter 6: type 'decimal.Decimal' is not supported
+2025-05-27 19:04:13 - ui.product_manager - ERROR - Error saving product: Error binding parameter 6: type 'decimal.Decimal' is not supported

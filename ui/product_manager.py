@@ -320,13 +320,12 @@ class ProductManagerDialog(QDialog):
                 category = next((c for c in self.categories if c.id == product.category_id), None)
                 if category:
                     category_name = category.name
-            
-            # Set table items
+              # Set table items
             self.products_table.setItem(row, 0, QTableWidgetItem(product.sku))
             self.products_table.setItem(row, 1, QTableWidgetItem(product.name))
             self.products_table.setItem(row, 2, QTableWidgetItem(category_name))
             self.products_table.setItem(row, 3, QTableWidgetItem(f"${product.selling_price:.2f}"))
-            self.products_table.setItem(row, 4, QTableWidgetItem(str(product.stock_quantity)))
+            self.products_table.setItem(row, 4, QTableWidgetItem(str(product.quantity_in_stock)))
             self.products_table.setItem(row, 5, QTableWidgetItem("Active" if product.is_active else "Inactive"))
             
             # Store product ID in first column

@@ -116,14 +116,11 @@ class ClientManager:
         try:
             # Generate customer code if not provided
             customer_code = client.customer_code or self._generate_customer_code()
-            
-            client_id = self.db.execute_insert("""
-                INSERT INTO clients (customer_code, first_name, last_name, email, phone,
+            client_id = self.db.execute_insert("""INSERT INTO clients (customer_code, first_name, last_name, email, phone,
                                    address, city, postal_code, credit_limit, current_balance, is_active)
-                VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
-            """, (customer_code, client.first_name, client.last_name, client.email, client.phone,
-                  client.address, client.city, client.postal_code, client.credit_limit, 
-                  client.current_balance, client.is_active))
+                VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)""", (customer_code, client.first_name, client.last_name, client.email, client.phone,
+                  client.address, client.city, client.postal_code, float(client.credit_limit), 
+                  float(client.current_balance), client.is_active))
             
             self.logger.info(f"Client '{client.full_name}' created successfully")
             return client_id

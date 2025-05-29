@@ -577,13 +577,13 @@ class InventoryManager:
         """Get all suppliers.
         
         Returns:
-            List of all suppliers
-        """
+            List of all suppliers        """
         query = "SELECT * FROM suppliers ORDER BY name"
         results = self.db.execute_query(query)
         return [self._row_to_supplier(row) for row in results]
     
-    # Helper methods    def _row_to_product(self, row) -> Product:
+    # Helper methods
+    def _row_to_product(self, row) -> Product:
         """Convert database row to Product object.
         
         Args:
@@ -607,7 +607,8 @@ class InventoryManager:
             min_stock_level=row['min_stock_level'] if row['min_stock_level'] is not None else 0,
             barcode=row['barcode'],
             location=row['location'],
-            is_active=bool(row['is_active']) if row['is_active'] is not None else True,            created_at=datetime.fromisoformat(row['created_at']) if row['created_at'] else datetime.now(),
+            is_active=bool(row['is_active']) if row['is_active'] is not None else True,
+            created_at=datetime.fromisoformat(row['created_at']) if row['created_at'] else datetime.now(),
             updated_at=datetime.fromisoformat(row['updated_at']) if row['updated_at'] else datetime.now()
         )
     

@@ -10,3 +10,27 @@
 2025-05-27 18:58:18 - ui.product_manager - ERROR - Error saving product: 'InventoryManager' object has no attribute 'add_product'
 2025-05-27 19:04:13 - core.inventory - ERROR - Error creating product: Error binding parameter 6: type 'decimal.Decimal' is not supported
 2025-05-27 19:04:13 - ui.product_manager - ERROR - Error saving product: Error binding parameter 6: type 'decimal.Decimal' is not supported
+2025-05-27 19:14:11 - ui.product_manager - ERROR - Error loading products: 'sqlite3.Row' object has no attribute 'get'
+2025-05-27 19:14:18 - ui.main_window - ERROR - Error loading products: 'sqlite3.Row' object has no attribute 'get'
+2025-05-27 19:36:41 - ui.main_window - ERROR - Error loading products: 'InventoryManager' object has no attribute '_row_to_product'
+2025-05-28 16:32:37 - ui.product_manager - ERROR - Error searching products: 'Product' object has no attribute 'stock_quantity'
+2025-05-28 16:32:39 - ui.product_manager - ERROR - Error searching products: 'Product' object has no attribute 'stock_quantity'
+2025-05-28 16:32:40 - ui.product_manager - ERROR - Error loading products: 'Product' object has no attribute 'stock_quantity'
+2025-05-28 16:33:12 - ui.product_manager - ERROR - Error searching products: 'Product' object has no attribute 'stock_quantity'
+2025-05-28 16:33:14 - ui.product_manager - ERROR - Error searching products: 'Product' object has no attribute 'stock_quantity'
+2025-05-28 16:33:14 - ui.product_manager - ERROR - Error loading products: 'Product' object has no attribute 'stock_quantity'
+2025-05-28 16:34:05 - ui.product_manager - ERROR - Error searching products: 'Product' object has no attribute 'stock_quantity'
+2025-05-28 16:34:06 - ui.product_manager - ERROR - Error searching products: 'Product' object has no attribute 'stock_quantity'
+2025-05-28 16:34:06 - ui.product_manager - ERROR - Error loading products: 'Product' object has no attribute 'stock_quantity'
+2025-05-28 16:34:27 - ui.product_manager - ERROR - Error loading products: 'Product' object has no attribute 'stock_quantity'
+2025-05-28 17:41:30 - core.sales - ERROR - Error adding item to sale: Insufficient stock. Available: 0
+2025-05-28 17:41:30 - ui.main_window - ERROR - Error adding product to sale: Insufficient stock. Available: 0
+2025-05-28 17:41:33 - core.sales - ERROR - Error adding item to sale: Insufficient stock. Available: 0
+2025-05-28 17:41:33 - ui.main_window - ERROR - Error adding product to sale: Insufficient stock. Available: 0
+2025-05-28 17:41:51 - ui.product_manager - ERROR - Error searching products: 'Product' object has no attribute 'stock_quantity'
+2025-05-28 18:05:33 - core.clients - ERROR - Error adding client: Error binding parameter 9: type 'decimal.Decimal' is not supported
+2025-05-28 18:05:33 - ui.client_manager - ERROR - Error saving client: Error binding parameter 9: type 'decimal.Decimal' is not supported
+2025-05-29 13:23:01 - core.sales - ERROR - Error completing sale: Error binding parameter 4: type 'decimal.Decimal' is not supported
+2025-05-29 13:23:01 - ui.main_window - ERROR - Error completing payment: Error binding parameter 4: type 'decimal.Decimal' is not supported
+2025-05-29 14:59:43 - core.sales - ERROR - Error completing sale: Error binding parameter 4: type 'decimal.Decimal' is not supported
+2025-05-29 14:59:43 - ui.main_window - ERROR - Error completing payment: Error binding parameter 4: type 'decimal.Decimal' is not supported

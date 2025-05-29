@@ -29,6 +29,8 @@ from ui.product_manager import ProductManagerDialog
 from ui.client_manager import ClientManagerDialog
 from ui.category_manager import CategoryManagerDialog
 from ui.stock_manager import StockManagerDialog
+from ui.barcode_scanner import BarcodeInputWidget
+from ui.payment_dialog import PaymentDialog
 
 
 class ProductButton(QPushButton):
@@ -181,14 +183,17 @@ class MainWindow(QMainWindow):
         
         # Status bar
         self.create_status_bar()
-        
-        # Apply stylesheet
+          # Apply stylesheet
         self.apply_styles()
     
     def create_left_panel(self) -> QWidget:
         """Create the left panel with products and search."""
         widget = QWidget()
         layout = QVBoxLayout(widget)
+        
+        # Barcode scanner section
+        self.barcode_scanner = BarcodeInputWidget()
+        layout.addWidget(self.barcode_scanner)
         
         # Search section
         search_group = QGroupBox("Product Search")
@@ -443,11 +448,13 @@ class MainWindow(QMainWindow):
             
             with open(style_file, 'r') as f:
                 self.setStyleSheet(f.read())
-        except Exception as e:
-            self.logger.warning(f"Could not load stylesheet: {e}")
+        except Exception as e:            self.logger.warning(f"Could not load stylesheet: {e}")
     
     def setup_connections(self):
         """Setup signal connections."""
+        # Barcode scanner
+        self.barcode_scanner.barcode_entered.connect(self.on_barcode_scanned)
+        
         # Search
         self.search_button.clicked.connect(self.search_products)
         self.search_input.returnPressed.connect(self.search_products)
@@ -635,6 +642,42 @@ class MainWindow(QMainWindow):
             self.logger.error(f"Error adding item manually: {e}")
             QMessageBox.warning(self, "Error", str(e))
     
+    def on_barcode_scanned(self, barcode: str):
+        """Handle barcode scanned from the barcode scanner widget."""
+        try:
+            # Set the barcode in the item search field
+            self.item_search.setText(barcode)
+            
+            # Try to find product by barcode
+            product = self.inventory_manager.get_product_by_barcode(barcode)
+            if not product:
+                # Try by SKU as fallback
+                product = self.inventory_manager.get_product_by_sku(barcode)
+            
+            if product:
+                # Automatically add the product with default quantity
+                quantity = self.qty_spinbox.value()
+                self.sales_manager.add_item(product.id, quantity)
+                
+                # Update UI
+                self.refresh_sale_display()
+                
+                # Clear input after short delay for visual feedback
+                QTimer.singleShot(1500, self.item_search.clear)
+                
+                self.logger.info(f"Product added via barcode scan: {product.name} (Barcode: {barcode})")
+            else:
+                # Product not found - leave barcode in field for manual verification
+                QMessageBox.warning(self, "Product Not Found", 
+                                  f"No product found with barcode: {barcode}\n"
+                                  f"Please verify the barcode or add the product manually.")
+                self.logger.warning(f"Barcode scan failed - product not found: {barcode}")
+                
+        except Exception as e:
+            self.logger.error(f"Error processing scanned barcode {barcode}: {e}")
+            QMessageBox.warning(self, "Barcode Error", 
+                              f"Error processing barcode: {str(e)}")
+    
     def remove_item(self, product_id: int):
         """Remove an item from the sale."""
         try:
@@ -655,8 +698,7 @@ class MainWindow(QMainWindow):
         self.items_table.clear_items()
         for item in self.current_sale.items:
             self.items_table.add_sale_item(item)
-        
-        # Update totals
+          # Update totals
         self.update_totals()
     
     def update_totals(self):
@@ -680,28 +722,51 @@ class MainWindow(QMainWindow):
             return
         
         try:
-            # For now, assume full payment
-            amount_paid = self.current_sale.total_amount
-            
             # Get client ID if selected
             client_id = self.client_combo.currentData()
             if client_id:
                 # Update sale with client
                 self.current_sale.client_id = client_id
             
+            # Open payment dialog
+            payment_dialog = PaymentDialog(self.current_sale, self)
+            payment_dialog.payment_completed.connect(self.on_payment_completed)
+            
+            # Show the dialog
+            if payment_dialog.exec_() == QDialog.Accepted:
+                pass  # Payment completed signal will handle the completion
+                
+        except Exception as e:
+            self.logger.error(f"Error opening payment dialog: {e}")
+            QMessageBox.critical(self, "Payment Error", f"Failed to open payment dialog: {e}")
+    
+    def on_payment_completed(self, payment_details: dict):
+        """Handle completed payment from payment dialog."""
+        try:
+            # Extract payment details
+            payment_method = payment_details.get('method', 'cash')
+            amount_paid = payment_details.get('amount_received', self.current_sale.total_amount)
+            
             # Complete the sale
             sale_id = self.sales_manager.complete_sale(payment_method, amount_paid)
             
-            # Show success message
-            QMessageBox.information(self, "Sale Completed", 
-                                  f"Sale {self.current_sale.sale_number} completed successfully!")
+            # Show success message with payment details
+            change_due = payment_details.get('change_due', 0)
+            if change_due > 0:
+                message = (f"Sale {self.current_sale.sale_number} completed successfully!\n"
+                          f"Payment: ${amount_paid:.2f}\n"
+                          f"Change due: ${change_due:.2f}")
+            else:
+                message = f"Sale {self.current_sale.sale_number} completed successfully!"
+            
+            QMessageBox.information(self, "Sale Completed", message)
             
             # Start new sale
             self.start_new_sale()
             
         except Exception as e:
-            self.logger.error(f"Error processing payment: {e}")
-            QMessageBox.critical(self, "Payment Error", f"Failed to process payment: {e}")
+            self.logger.error(f"Error completing payment: {e}")
+            QMessageBox.critical(self, "Payment Error", f"Failed to complete payment: {e}")
     
     def apply_discount(self):
         """Apply a discount to the sale."""
